@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const indicators = document.querySelectorAll('.carousel-indicators button')
   let currentIndex = 0
   let autoSlideInterval
+
   goToSlide(0)
 
   indicators.forEach((indicator, index) => {
@@ -26,48 +27,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
   startAutoSlide()
 
-  function goToSlide(index) {
+  function goToSlide(index, isAutoSlide) {
     if (index === currentIndex) {
       return
     }
 
-    const movingToLeft = index > currentIndex
+    let movingDirection = isAutoSlide
+      ? '-100%'
+      : index > currentIndex
+      ? '-100%'
+      : '100%'
 
     indicators.forEach((indicator, idx) => {
-      if (idx === index) {
-        indicator.classList.add('active')
-      } else {
-        indicator.classList.remove('active')
-      }
+      indicator.classList.toggle('active', idx === index)
     })
 
+    slides[currentIndex].style.opacity = '0'
+    slides[currentIndex].style.transform = `translateX(${movingDirection})`
+    slides[currentIndex].classList.remove('active')
+
     slides[index].style.opacity = '1'
-    slides[index].style.transform = `translateX(${
-      movingToLeft ? '100%' : '-100%'
-    })`
+    slides[index].style.transform = 'translateX(0%)'
     slides[index].classList.add('active')
 
     setTimeout(() => {
-      slides[currentIndex].style.transform = `translateX(${
-        movingToLeft ? '-100%' : '100%'
-      })`
-      slides[currentIndex].style.opacity = '0'
-
-      slides[index].style.transform = 'translateX(0%)'
-
-      setTimeout(() => {
-        slides[currentIndex].classList.remove('active')
-        slides[currentIndex].style.transform = ''
-
-        currentIndex = index
-      }, 500)
-    }, 20)
+      slides[currentIndex].style.transform = ''
+      currentIndex = index
+    }, 500)
   }
 
   function startAutoSlide() {
     autoSlideInterval = setInterval(() => {
       const nextIndex = (currentIndex + 1) % slides.length
-      goToSlide(nextIndex)
+      goToSlide(nextIndex, true) // true: isAutoSlide
     }, 3000)
   }
 
@@ -78,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function shiftSlide(direction) {
     const nextIndex = (currentIndex + direction + slides.length) % slides.length
-    goToSlide(nextIndex)
+    goToSlide(nextIndex, false) // false: isAutoSlide
     resetAutoSlide()
   }
 })
