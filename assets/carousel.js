@@ -32,28 +32,29 @@ document.addEventListener('DOMContentLoaded', function () {
       return
     }
 
-    let movingDirection = isAutoSlide
-      ? '-100%'
+    const currentSlide = slides[currentIndex]
+    const nextSlide = slides[index]
+
+    let direction = isAutoSlide
+      ? '100%'
       : index > currentIndex
-      ? '-100%'
-      : '100%'
+      ? '100%'
+      : '-100%'
 
-    indicators.forEach((indicator, idx) => {
-      indicator.classList.toggle('active', idx === index)
-    })
-
-    slides[currentIndex].style.opacity = '0'
-    slides[currentIndex].style.transform = `translateX(${movingDirection})`
-    slides[currentIndex].classList.remove('active')
-
-    slides[index].style.opacity = '1'
-    slides[index].style.transform = 'translateX(0%)'
-    slides[index].classList.add('active')
+    nextSlide.style.transform = `translateX(${direction})`
+    nextSlide.classList.add('active')
 
     setTimeout(() => {
-      slides[currentIndex].style.transform = ''
-      currentIndex = index
-    }, 500)
+      currentSlide.style.opacity = '0'
+      nextSlide.style.opacity = '1'
+      nextSlide.style.transform = 'translateX(0)'
+
+      setTimeout(() => {
+        currentSlide.classList.remove('active')
+        currentSlide.style.transform = ''
+        currentIndex = index
+      }, 1000)
+    }, 20)
   }
 
   function startAutoSlide() {
