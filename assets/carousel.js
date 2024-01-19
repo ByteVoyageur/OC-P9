@@ -3,11 +3,13 @@ document.addEventListener('DOMContentLoaded', function () {
   const indicators = document.querySelectorAll('.carousel-indicators button')
   let currentIndex = 0
   let autoSlideInterval
+  let userClicked = '' // 'prev' for previous, 'next' for next, and '' for auto
 
   goToSlide(0)
 
   indicators.forEach((indicator, index) => {
     indicator.addEventListener('click', () => {
+      userClicked = ''
       goToSlide(index)
       resetAutoSlide()
     })
@@ -16,18 +18,20 @@ document.addEventListener('DOMContentLoaded', function () {
   document
     .querySelector('.carousel-control-prev')
     .addEventListener('click', () => {
+      userClicked = 'prev'
       shiftSlide(-1)
     })
 
   document
     .querySelector('.carousel-control-next')
     .addEventListener('click', () => {
+      userClicked = 'next'
       shiftSlide(1)
     })
 
   startAutoSlide()
 
-  function goToSlide(index, isAutoSlide) {
+  function goToSlide(index) {
     if (index === currentIndex) {
       return
     }
@@ -35,11 +39,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const currentSlide = slides[currentIndex]
     const nextSlide = slides[index]
 
-    let direction = isAutoSlide
-      ? '100%'
-      : index > currentIndex
-      ? '100%'
-      : '-100%'
+    // Determine the direction based on userClicked value
+    let direction
+    if (userClicked === 'prev') {
+      direction = '-100%'
+    } else {
+      direction = '100%'
+    }
 
     nextSlide.style.transform = `translateX(${direction})`
     nextSlide.classList.add('active')
@@ -59,9 +65,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function startAutoSlide() {
     autoSlideInterval = setInterval(() => {
+      userClicked = ''
       const nextIndex = (currentIndex + 1) % slides.length
-      goToSlide(nextIndex, true) // true: isAutoSlide
-    }, 3000)
+      goToSlide(nextIndex) // true: isAutoSlide
+    }, 5000)
   }
 
   function resetAutoSlide() {
@@ -71,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function shiftSlide(direction) {
     const nextIndex = (currentIndex + direction + slides.length) % slides.length
-    goToSlide(nextIndex, false) // false: isAutoSlide
+    goToSlide(nextIndex)
     resetAutoSlide()
   }
 })
