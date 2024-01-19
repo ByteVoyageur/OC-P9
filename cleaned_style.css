@@ -963,6 +963,7 @@ textarea {
 }
 .carousel-indicators .active {
   opacity: 1;
+  background-color: #fff;
 }
 .visually-hidden,
 .visually-hidden-focusable:not(:focus):not(:focus-within) {

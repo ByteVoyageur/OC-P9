@@ -31,6 +31,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
   startAutoSlide()
 
+  function updateIndicators(activeIndex) {
+    indicators.forEach((indicator, index) => {
+      if (index === activeIndex) {
+        indicator.classList.add('active')
+      } else {
+        indicator.classList.remove('active')
+      }
+    })
+  }
+
   function goToSlide(index) {
     if (index === currentIndex) {
       return
@@ -61,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
         currentIndex = index
       }, 1000)
     }, 20)
+    updateIndicators(index)
   }
 
   function startAutoSlide() {
