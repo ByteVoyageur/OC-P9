@@ -149,6 +149,14 @@ h3.about-me__introduction {
 .nav-pills .nav-link {
   color: #000;
 }
+
+.lightboxImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .item-column {
   position: relative;
   margin-bottom: 0 !important;
@@ -188,6 +196,7 @@ h3.about-me__introduction {
   font-family: Spectral;
   font-style: italic;
   font-weight: 300;
+  font-size: 1.6em;
 }
 .quote__author {
   font-family: Spectral;
