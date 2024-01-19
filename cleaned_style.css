@@ -46,11 +46,10 @@ body {
   left: 0;
   width: 100%;
   opacity: 0;
-  transition: transform 1s ease;
+  transition: opacity 1s ease, transform 1s ease;
 }
 .carousel-item.active {
   opacity: 1;
-  position: relative;
 }
 .carousel-item img {
   width: 100%;
@@ -97,6 +96,7 @@ body {
 }
 .picture img {
   width: 100%;
+  height: auto;
 }
 #about-me {
   flex: 2;
@@ -106,11 +106,28 @@ body {
   margin-bottom: 60px;
   font-size: 30px;
 }
+
+h3.about-me__introduction {
+  font-size: 1em;
+  width: 75%;
+}
+
+@media (max-width: 991px) {
+  h3.about-me__introduction {
+    width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  h3.about-me__introduction {
+    width: 100%;
+  }
+}
+
 .about-me__introduction {
   font-family: 'Spectral';
   font-weight: 800;
   font-style: italic;
-  width: 60%;
 }
 #about-me p {
   width: 80%;
@@ -122,6 +139,7 @@ body {
 }
 .gallery .nav {
   justify-content: center;
+  cursor: pointer;
 }
 .nav-pills .nav-link.active {
   color: #fff;
@@ -148,6 +166,7 @@ body {
   object-fit: cover;
   padding: 0.5em;
 }
+
 .mg-prev,
 .mg-next {
   width: 30px;
@@ -746,10 +765,7 @@ textarea {
   border: 0;
   border-radius: 0.25rem;
 }
-.nav-pills .nav-link.active {
-  color: #fff;
-  background-color: #0d6efd;
-}
+
 .modal {
   position: fixed;
   top: 0;
