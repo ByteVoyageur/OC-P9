@@ -143,7 +143,7 @@ h3.about-me__introduction {
 }
 .nav-pills .nav-link.active {
   color: #fff;
-  background-color: #beb45a;
+  background-color: rgb(120, 110, 30);
   border-radius: 0;
 }
 .nav-pills .nav-link {
